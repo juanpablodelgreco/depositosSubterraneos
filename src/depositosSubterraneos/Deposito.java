@@ -3,15 +3,11 @@ package depositosSubterraneos;
 public class Deposito {
 	private int superficie;
 	private int profundidad;
-	private int maxCapacidad;
-	private int llenado;
 	private boolean usado;
-	
+
 	public Deposito(int sup, int prof) {
 		this.superficie = sup;
 		this.profundidad = prof;
-		this.maxCapacidad = sup * prof;
-		this.llenado = 0;
 		this.usado = false;
 	}
 
@@ -31,18 +27,6 @@ public class Deposito {
 		this.profundidad = profundidad;
 	}
 
-	public int getMaxCapacidad() {
-		return maxCapacidad;
-	}
-
-	public int getLlenado() {
-		return llenado;
-	}
-
-	public void setLlenado(int llenado) {
-		this.llenado = llenado;
-	}
-	
 	public boolean isUsado() {
 		return usado;
 	}
@@ -51,10 +35,4 @@ public class Deposito {
 		this.usado = usado;
 	}
 
-	@Override
-	public String toString() {
-		return "Deposito [superficie=" + superficie + ", profundidad=" + profundidad + "]";
-	}
-	
-	
 }
