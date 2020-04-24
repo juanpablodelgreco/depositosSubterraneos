@@ -11,42 +11,58 @@ public class LlenarDepositos {
 	private int depositosUtilizados;
 	private int profundiadDelSuelo;
 
-
 	public LlenarDepositos(String inputPath, String outputPath) {
 		this.inputPath = inputPath;
 		this.outputPath = outputPath;
 	}
-	
+
 	public void llenadoDepositos() {
 		LeerEscribir l = new LeerEscribir();
+		boolean seguir = true;
 		l.leerArchivo(this);
 		int volumen = 0;
 		int rebalsa = 0;
-		for(Deposito dp:depositos) {
-		volumen +=	dp.getSuperficie() * dp.getProfundidad();
+		for (Deposito dp : depositos) {
+			volumen += dp.getMaxCapacidad();
 		}
-		if(volumenAllenar > volumen ) {
+		if (volumenAllenar > volumen) {
 			rebalsa = volumenAllenar - volumen;
-			System.out.println(rebalsa);
-		}else if(volumenAllenar == volumen) {
+			System.out.println("Rebalsa: "+rebalsa);
+			seguir = false;
+		} else if (volumenAllenar == volumen) {
 			depositosUtilizados = cantDepositos;
 			profundiadDelSuelo = 0;
 			System.out.println(cantDepositos);
 			System.out.println(profundiadDelSuelo);
+			seguir = false;
 		}
-		int profBase;
-		int volumenLlenado = 0;
-		for(int i=0; i<cantDepositos; i++) {
-			profBase = depositos[i].getProfundidad();
-			for(int j=i; j<cantDepositos; j++) {
-				if(depositos[j].getProfundidad() == profBase) {
-					volumenLlenado += depositos[j].getSuperficie();
+		if (seguir == true) {
+			int profBase = depositos[0].getProfundidad();
+			int volumenLlenado = 0;
+			int i = 0;
+			while (this.volumenAllenar > volumenLlenado) {
+				
+				while (this.volumenAllenar > volumenLlenado && depositos[i].getProfundidad() == profBase
+						&& i < depositos.length) {
+					System.out.println(i);
+					volumenLlenado += depositos[i].getSuperficie();
+					System.out.println("SUME " + depositos[i].getSuperficie());
+					depositos[i].setProfundidad(depositos[i].getProfundidad() - 1);
+					System.out.println("Profundidad->"+depositos[i].getProfundidad());
+					System.out.println("Actual profundidad->" + profBase);
+					System.out.println("Llenado->" + volumenLlenado);
+					System.out.println("A llenar->" + this.volumenAllenar);
+					System.out.println("---------------------");
+					if(i+1<depositos.length)
+						i++;
 				}
+				if (this.volumenAllenar > volumenLlenado) {
+					profBase--;
+				}
+				i = 0;
 			}
+			System.out.println(profBase-1);
 		}
-		
-	
-		
 	}
 
 	public String getInputPath() {
@@ -84,7 +100,15 @@ public class LlenarDepositos {
 		System.out.println(volumenAllenar);
 	}
 
-	
-	
+	/*
+	while(depositos[i].getProfundidad() == profBase && this.volumenAllenar > volumenLlenado && i<depositos.length) {
+		//if(depositos[i].getMaxCapacidad() > depositos[i].getLlenado()) {}
+			volumenLlenado += depositos[i].getSuperficie();
+		i++;
+	}
+	if(depositos[i].getProfundidad() != profBase ) {
+		i=0;
+		profBase--;
+	}*/
 	
 }
