@@ -3,10 +3,10 @@ package depositosSubterraneos;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.Scanner;
 
 public class LeerEscribir {
-
 
 	public void leerArchivo(LlenarDepositos ld) {
 		try {
@@ -31,22 +31,39 @@ public class LeerEscribir {
 		}
 
 	}
-	
+
 	public void escribirArchivo(LlenarDepositos ld) {
 		try {
 			PrintWriter pw = new PrintWriter(new File(ld.getOutputPath()));
-			if(ld.getRebalsa() > 0)
-				pw.print("Rebasan: "+ld.getRebalsa());
+			if (ld.getRebalsa() > 0)
+				pw.print("Rebasan: " + ld.getRebalsa());
 			else {
-			pw.println(ld.getDepositosUtilizados());
-			pw.println(ld.getProfundiadDelSuelo());
+				pw.println(ld.getDepositosUtilizados());
+				pw.println(ld.getProfundiadDelSuelo());
 			}
 			pw.close();
-			System.out.println(ld.getOutputPath()+" generado con exito!");
+			System.out.println(ld.getOutputPath() + " generado con exito!");
 		} catch (FileNotFoundException e) {
-			System.out.println("No se pudo crear el archivo "+ld.getOutputPath());
+			System.out.println("No se pudo crear el archivo " + ld.getOutputPath());
 		}
-		
+
+	}
+
+	public static void casoFatiga() {
+		try {
+			String path = "./lote_de_pruebas/Inputs/6.in";
+			PrintWriter pw = new PrintWriter(new File(path));
+			pw.println(400);
+			Random sr = new Random();
+			for (int i = 0; i < 400; i++) {
+				pw.println(sr.nextInt(200) + " " + (400 - i));
+			}
+			pw.println(200);
+			pw.close();
+			System.out.println(path + " generado con exito!");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
